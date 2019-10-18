@@ -1,16 +1,16 @@
 <?php
 /**
- * Plugin Name: CoBlocks
- * Plugin URI: https://coblocks.com
- * Description: CoBlocks is a suite of professional <strong>page building content blocks</strong> for the WordPress Gutenberg block editor. Our blocks are hyper-focused on empowering makers to build beautifully rich pages in WordPress.
- * Author: GoDaddy
- * Author URI: https://www.godaddy.com
- * Version: 1.16.0
+ * Plugin Name: CoBlocks Extended
+ * Plugin URI: https://github.com/hacklabr/coblocks-extended
+ * Description: CoBlocks Extended is a extended version of <a href="https://coblocks.org/">CoBlocks</a>, a suite of professional <strong>page building content blocks</strong> for the WordPress Gutenberg block editor. Our blocks are hyper-focused on empowering makers to build beautifully rich pages in WordPress.
+ * Author: hacklab/
+ * Author URI: https://hacklab.com.br/
+ * Version: 1.0.0
  * Text Domain: coblocks
  * Domain Path: /languages
  * Tested up to: 5.2.2
  *
- * CoBlocks is free software: you can redistribute it and/or modify
+ * CoBlocks Extended is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * any later version.

@@ -1,15 +1,15 @@
 {
-	"name": "coblocks",
-	"title": "CoBlocks",
-	"description": "CoBlocks is a suite of professional page building blocks for the WordPress Gutenberg block editor.",
-	"version": "1.16.0",
+	"name": "coblocks-extended",
+	"title": "CoBlocks Extended",
+	"description": "CoBlocks Extended is a extended version of CoBlocks, a suite of professional page building blocks for the WordPress Gutenberg block editor.",
+	"version": "1.0.0",
 	"tested_up_to": "5.2.2",
-	"author": "GoDaddy",
+	"author": "hacklab",
 	"license": "GPL-2.0",
 	"repository": "godaddy/coblocks",
-	"homepage": "https://wordpress.org/plugins/coblocks/",
+	"homepage": "https://github.com/hacklabr/coblocks-extended/",
 	"bugs": {
-		"url": "https://github.com/godaddy/coblocks/issues"
+		"url": "https://github.com/hacklabr/coblocks-extended/issues"
 	},
 	"scripts": {
 		"start": "node .dev/scripts/start.js",
