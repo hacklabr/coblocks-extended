@@ -116,6 +116,8 @@ if ( ! class_exists( 'CoBlocks' ) ) :
 			require_once COBLOCKS_PLUGIN_DIR . 'includes/class-coblocks-block-settings.php';
 			require_once COBLOCKS_PLUGIN_DIR . 'includes/get-dynamic-blocks.php';
 
+			require_once COBLOCKS_PLUGIN_DIR . 'includes/component-select-posts.php';
+
 			if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 				require_once COBLOCKS_PLUGIN_DIR . 'includes/admin/class-coblocks-getting-started-page.php';
 				require_once COBLOCKS_PLUGIN_DIR . 'includes/admin/class-coblocks-action-links.php';
