@@ -21,5 +21,11 @@ setCategories( [
 		title: sprintf( __( '%s Galleries', 'coblocks' ), 'CoBlocks' ),
 		icon: brandAssets.categoryIcon,
 	},
-	...getCategories().filter( ( { slug } ) => slug !== 'coblocks-galleries' ),
+	{
+		slug: 'coblocks-extended',
+		/* translators: %s: Plugin title, i.e. CoBlocks */
+		title: sprintf( __( '%s Extended', 'coblocks' ), 'CoBlocks' ),
+		icon: brandAssets.categoryIcon,
+	},
+	...getCategories().filter( ( { slug } ) => (slug !== 'coblocks-galleries' && slug !== 'coblocks-extended') ),
 ] );
