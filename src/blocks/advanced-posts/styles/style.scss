@@ -11,6 +11,16 @@
 		margin-bottom: 0;
 	}
 
+	&.display-first-post-image:not(.is-style-featured) .columns{
+		> .flex > .wp-block-coblocks-posts__image{
+			display: none;
+		}
+
+		> .flex:first-child > .wp-block-coblocks-posts__image{
+			display: block;
+		}
+	}
+
 	&.is-style-featured .columns .has-featured-image{
 		position: relative;
 

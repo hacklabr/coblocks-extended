@@ -372,6 +372,10 @@ function coblocks_register_posts_block() {
 					'type'    => 'boolean',
 					'default' => true,
 				),
+				'displayFirstPostImage'    => array(
+					'type'    => 'boolean',
+					'default' => false,
+				),
 				'displayPostDate'    => array(
 					'type'    => 'boolean',
 					'default' => true,
