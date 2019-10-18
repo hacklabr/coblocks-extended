@@ -21,8 +21,12 @@
 		}
 	}
 
-	&.is-style-featured .columns .has-featured-image{
-		position: relative;
+	&.is-style-featured .columns{
+		.flex.items-stretch { position: relative; }
+
+		.wp-block-coblocks-posts__image{
+			width: 100%;
+		}
 
 		.wp-block-coblocks-posts__content{
 			position: absolute;
@@ -40,9 +44,9 @@
 			&:after{
 				content: '';
 				width: 100%;
-				height: 100%;
+				height: calc(100% + 40px);
 				position: absolute;
-				top: 0;
+				top: -30px;
 				background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #000000 100%);
 				left: 0;
 			}
