@@ -1,0 +1,8 @@
+{
+	"name": "coblocks/advanced-posts",
+	"category": "coblocks-extended",
+	"supports": {
+		"align": ["wide", "full"],
+		"html": false
+	}
+}

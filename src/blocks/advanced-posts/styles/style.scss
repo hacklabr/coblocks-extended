@@ -1,0 +1,92 @@
+.wp-block-coblocks-advanced-posts {
+	& + & {
+		margin-top: map-get($margin, 2);
+	}
+
+	&.columns-1 > div:first-child {
+		margin-top: 0;
+	}
+
+	&.columns-1 > div:last-child {
+		margin-bottom: 0;
+	}
+
+	&.is-style-featured .columns .has-featured-image{
+		position: relative;
+
+		.wp-block-coblocks-posts__content{
+			position: absolute;
+			bottom: 10px;
+			padding: 20px;
+
+			a, * {
+				color: white;
+				position: relative;
+				z-index: 1;
+			}
+
+			a{ font-size: 30px; line-height: 1.2; }
+
+			&:after{
+				content: '';
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #000000 100%);
+				left: 0;
+			}
+		}
+	}
+}
+
+.wp-block-coblocks-posts__date {
+	color: $dark-gray-300;
+	display: block;
+	font-size: $editor-font-size;
+}
+
+.is-twentynineteen {
+	.wp-block-coblocks-posts {
+		line-height: 1.6;
+
+		&__content a {
+			font-size: calc(22px * 1.125);
+			font-weight: 700;
+			line-height: 1.2;
+			margin-bottom: 0.5rem;
+			margin-top: 0.5rem;
+			text-decoration: none !important;
+		}
+
+		&__date {
+			font-weight: 700;
+		}
+	}
+}
+
+.is-twentytwenty {
+	.wp-block-coblocks-posts .columns {
+		margin-bottom: 0.5em;
+	}
+
+	.wp-block-coblocks-posts a {
+		font-family: "Inter var", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, sans-serif;
+		font-weight: 700;
+		letter-spacing: -0.025em;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.wp-block-coblocks-posts__date {
+		color: #6d6d6d;
+		font-family: "Inter var", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, sans-serif;
+		font-size: 0.7em;
+		font-weight: 600;
+		letter-spacing: normal;
+		margin-bottom: 0.2em;
+	}
+}

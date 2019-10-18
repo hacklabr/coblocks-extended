@@ -76,6 +76,9 @@ import * as share from './blocks/share';
 import * as socialProfiles from './blocks/social-profiles';
 import * as stacked from './blocks/gallery-stacked';
 
+import * as advancedPosts from './blocks/advanced-posts';
+
+
 /**
  * Function to register an individual block.
  *
@@ -141,6 +144,7 @@ export const registerCoBlocksBlocks = () => {
 		share,
 		socialProfiles,
 		stacked,
+		advancedPosts,
 	].forEach( registerBlock );
 };
 
