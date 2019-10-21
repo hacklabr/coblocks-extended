@@ -196,17 +196,18 @@ class AdvancedPostsEdit extends Component {
 	}
 
 	updateStyle( style ) {
-		const { className, setAttributes } = this.props;
+		const { className, setAttributes, attributes } = this.props;
 
 		const activeStyle = getActiveStyle( styleOptions, className );
 
-		const updatedClassName = replaceActiveStyle(
+		let updatedClassName = replaceActiveStyle(
 			className,
 			activeStyle,
 			style
 		);
 
-		setAttributes( { className: updatedClassName } );
+		updatedClassName = updatedClassName.replace('display-first-post-image', '')
+		setAttributes( { className: `${updatedClassName} ${ attributes.displayFirstPostImage ? 'display-first-post-image' : '' } ` } );
 	}
 
 	render() {
@@ -293,8 +294,6 @@ class AdvancedPostsEdit extends Component {
 						categoriesList={ categoriesList }
 						postCount={ latestPosts && latestPosts.length }
 						onSelectedPostsChange={ (value) => setAttributes( { selectedPosts : value } ) }
-						onOffsetChange={ (value) => setAttributes({ offset : value }) }
-						offset={ offset }
 					/>
 					<Placeholder
 						icon={ <BlockIcon icon={ icon } /> }
@@ -338,8 +337,6 @@ class AdvancedPostsEdit extends Component {
 						categoriesList={ categoriesList }
 						postCount={ latestPosts && latestPosts.length }
 						onSelectedPostsChange={ (value) => setAttributes( { selectedPosts : value } ) }
-						onOffsetChange={ (value) => setAttributes({ offset : value }) }
-						offset={ offset }
 					/>
 					<Placeholder
 						icon={ <BlockIcon icon={ icon } /> }
@@ -379,8 +376,6 @@ class AdvancedPostsEdit extends Component {
 					postCount={ latestPosts && latestPosts.length }
 					selectedPosts={ selectedPosts }
 					onSelectedPostsChange={ (value) => setAttributes( { selectedPosts : value } ) }
-					onOffsetChange={ (value) => setAttributes({ offset : value }) }
-					offset={ offset }
 				/>
 				<BlockControls>
 					{ isHorizontalStyle &&

@@ -35,10 +35,7 @@ const Inspector = props => {
 		hasPosts,
 		hasFeaturedImage,
 		onSelectedPostsChange,
-		onOffsetChange
 	} = props;
-
-	console.log(activeStyle);
 
 	const {
 		order,
@@ -86,11 +83,14 @@ const Inspector = props => {
 	const settings = (
 		<PanelBody title={ __( 'Posts Settings', 'coblocks' ) }>
 			<Fragment>
-				{
+				{ activeStyle.name != "featured" && 
 					<ToggleControl
 					label={ __( 'Exibir imagem somente para o primeiro post' ) }
 					checked={ displayFirstPostImage }
-					onChange={ () => setAttributes( { displayFirstPostImage: ! displayFirstPostImage } ) }
+					onChange={ () => {
+						setAttributes( { displayFirstPostImage: ! displayFirstPostImage } ) 
+						setTimeout( () => onUpdateStyle(activeStyle), 0)
+					} }
 					/>
 				}
 				<ToggleControl
@@ -129,7 +129,7 @@ const Inspector = props => {
 						onUserModifiedColumn();
 						setAttributes( { columns: value } );
 					} }
-					min={ isStackedStyle ? 2 : 1 }
+					min={ 1 }
 					max={ isHorizontalStyle ? 2 : Math.min( 4, postCount ) }
 					required
 				/>
@@ -163,7 +163,7 @@ const Inspector = props => {
 			</Fragment>
 		</PanelBody>
 	);
-
+	
 	const feedSettings = (
 		<PanelBody title={ __( 'Feed Settings', 'coblocks' ) } initialOpen={ ! hasPosts ? true : false }>
 			<RadioControl
@@ -186,9 +186,9 @@ const Inspector = props => {
 						onCategoryChange={ ( value ) => setAttributes( { categories: '' !== value ? value : undefined } ) }
 						onPostsChange={ ( value ) => {
 							onSelectedPostsChange(value)
-							setAttributes( { posts : value } )
+							setAttributes( { posts : value } ) 
 						} }
-						onOffsetChange={ (value) => onOffsetChange(value) }
+						onOffsetChange={ (value) => setAttributes({ offset : value }) }
 						offset={ offset }
 					/>
 				}
