@@ -23,3 +23,4 @@ sandbox.json
 languages/coblocks-js.pot
 languages/*.json
 languages/*.mo
+env
