@@ -215,8 +215,9 @@ function advanced_posts( $posts, $attributes ) {
 		}
 
 		$list_items_markup .= sprintf(
-			'<a href="%1$s" alt="%2$s">%2$s</a>',
-			$post['postLink'],
+			'<a href="%1$s" alt="%2$s">%3$s</a>',
+			strip_tags($post['postLink']),
+			strip_tags($title),
 			$title
 		);
 
@@ -227,7 +228,6 @@ function advanced_posts( $posts, $attributes ) {
 				esc_url( $post['date'] ),
 				esc_html( $post['dateReadable'] )
 			);
-
 		}
 
 		if ( isset( $attributes['displayPostContent'] ) && $attributes['displayPostContent'] ) {

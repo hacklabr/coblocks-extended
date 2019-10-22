@@ -181,8 +181,10 @@ function coblocks_posts( $posts, $attributes ) {
 		}
 
 		$list_items_markup .= sprintf(
-			'<div class="wp-block-coblocks-posts__content flex flex-col %s w-full">',
-			esc_attr( $align_self_class )
+			'<a href="%1$s" alt="%2$s">%3$s</a>',
+			strip_tags($post['postLink'], '<b><i><strong>'),
+			strip_tags($title, '<b><i><strong>'),
+			$title
 		);
 
 		if ( isset( $attributes['displayPostDate'] ) && $attributes['displayPostDate'] && 'stacked' === $block_style ) {
