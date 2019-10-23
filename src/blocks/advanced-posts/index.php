@@ -303,6 +303,10 @@ function register_block() {
 					'type'    => 'boolean',
 					'default' => true,
 				),
+				'displayFirstPostImage'    => array(
+					'type'    => 'boolean',
+					'default' => false,
+				),
 				'displayPostLink'    => array(
 					'type'    => 'boolean',
 					'default' => false,
