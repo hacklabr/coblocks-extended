@@ -6,7 +6,7 @@ import { TreeSelect } from '@wordpress/components';
 
 export default function CategorySelect( { label, noOptionLabel, categoriesList, selectedCategoryId, onChange } ) {
 	const termsTree = buildTermsTree( categoriesList );
-	const selectedTerms = selectedCategoryId
+	let selectedTerms = selectedCategoryId
 
 	console.log(selectedTerms)
 
