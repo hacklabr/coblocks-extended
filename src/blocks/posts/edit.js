@@ -482,6 +482,7 @@ export default compose( [
 	withSelect( ( select, props ) => {
 		const { postsToShow, order, orderBy, categories } = props.attributes;
 		const { getEntityRecords } = select( 'core' );
+
 		const latestPostsQuery = pickBy( {
 			categories,
 			order,

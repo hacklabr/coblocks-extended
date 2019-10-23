@@ -38,9 +38,7 @@ function render_block( $attributes ) {
 
 
 	if ( isset( $attributes['categories'] ) ) {
-
 		$args['category'] = $attributes['categories'];
-
 	}
 
 	if ( 'external' === $attributes['postFeedType'] && $attributes['externalRssUrl'] ) {
@@ -340,7 +338,11 @@ function register_block() {
 					'default' => 'date',
 				),
 				'categories'         => array(
-					'type' => 'string',
+					'type' => 'array',
+					'items' => [
+						'type' => 'string'
+					],
+					'default' => [ ]
 				),
 				'selectedPosts'         => array(
 					'type' => 'array',

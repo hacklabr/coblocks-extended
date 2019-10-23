@@ -52,7 +52,9 @@ const Inspector = props => {
 		selectedPosts,
 		posts,
 		offset,
+		categories,
 	} = attributes;
+
 
 	const isStackedStyle = ( 'stacked' === activeStyle.name );
 	const isHorizontalStyle = ( 'horizontal' === activeStyle.name );
@@ -179,7 +181,7 @@ const Inspector = props => {
 					<AdvancedQueryControls
 						{ ...{ order, orderBy } }
 						categoriesList={ categoriesList }
-						selectedCategoryId={ categoriesList.categories }
+						selectedCategoryId={ categories }
 						selectedPosts={ selectedPosts ? selectedPosts : [] }
 						onOrderChange={ ( value ) => setAttributes( { order: value } ) }
 						onOrderByChange={ ( value ) => setAttributes( { orderBy: value } ) }
