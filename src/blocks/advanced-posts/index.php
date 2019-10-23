@@ -27,8 +27,9 @@ function render_block( $attributes ) {
 		'orderby'          => $attributes['orderBy'],
 		'suppress_filters' => false,
 		'post__not_in'     => array( $post->ID ),
+		'offset'		   => $attributes['offset']
 	);
-
+ 
 	if(isset($attributes['selectedPosts'])){
 		$args['post__in'] = array_map(function($p) {
 			return $p['ID'];
