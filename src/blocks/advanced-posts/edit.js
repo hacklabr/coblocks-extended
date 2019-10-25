@@ -516,7 +516,7 @@ export default compose( [
 		let latestPosts = [] 
 
 		cpts.map(cpt => {
-			let entityRecords = getEntityRecords( 'postType', cpt, latestPostsQuery )
+			let entityRecords = getEntityRecords( 'postType', (cpt == 'any' ? 'post' : cpt), latestPostsQuery )
 			if(entityRecords && entityRecords.length > 0){
 				latestPosts = [ ...latestPosts, ...entityRecords ]
 			}
