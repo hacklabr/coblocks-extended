@@ -245,8 +245,6 @@ class AdvancedPostsEdit extends Component {
 			offset,
 		} = attributes;
 
-		console.log(displayThumbnail)
-
 		const imageClasses = classnames( 'wp-block-coblocks-posts__image', 'table', 'flex-0', 'relative', {
 			'mr-3': isHorizontalStyle && listPosition === 'left',
 			'mb-2': isStackedStyle || isFeaturedStyle,
@@ -425,8 +423,8 @@ class AdvancedPostsEdit extends Component {
 
 								const titleTrimmed = post.title.rendered.trim();
 
-								let excerpt = post.excerpt.rendered;
-								if ( post.excerpt.raw === '' ) {
+								let excerpt = post.excerpt ? post.excerpt.rendered : '';
+								if ( post.excerpt && post.excerpt.raw === '' ) {
 									excerpt = post.content.raw;
 								}
 								const excerptElement = document.createElement( 'div' );
@@ -502,7 +500,7 @@ class AdvancedPostsEdit extends Component {
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { postsToShow, order, orderBy, categories, selectedPosts, offset } = props.attributes;
+		const { postsToShow, order, orderBy, categories, selectedPosts, offset, selectedPostTypes } = props.attributes;
 		const { getEntityRecords } = select( 'core' );
 
 		const latestPostsQuery = pickBy( {
@@ -514,9 +512,17 @@ export default compose( [
 			offset : selectedPosts.length > 0 || !offset ? 0 : offset,
 		}, ( value ) => ! isUndefined( value ) );
 
+		let cpts = selectedPostTypes.length == 0 ? [ 'post' ] : selectedPostTypes ;
+		let latestPosts = [] 
 
-		let latestPosts = getEntityRecords( 'postType', 'post', latestPostsQuery );
-		if ( latestPosts ) {
+		cpts.map(cpt => {
+			let entityRecords = getEntityRecords( 'postType', cpt, latestPostsQuery )
+			if(entityRecords && entityRecords.length > 0){
+				latestPosts = [ ...latestPosts, ...entityRecords ]
+			}
+		}) 
+
+		if ( latestPosts.length > 0 ) {
 			latestPosts = latestPosts.map( ( post ) => {
 				return {
 					...post,
@@ -524,7 +530,7 @@ export default compose( [
 				};
 			} );
 		}
-
+		
 		return {
 			latestPosts: latestPosts,
 		};

@@ -1,0 +1,49 @@
+.select-posts{
+	position: relative;
+
+	ul li{
+		font-size: 12px;
+	}
+	
+	&__selected li{
+		border: 1px solid #D5D5D5;
+		border-radius: 5px;
+		padding: 5px 20px 5px 5px;
+		position: relative;
+
+		.remove{
+			position: absolute;
+			font-size: 16px;
+			top: 0;
+			right: 0;
+			padding: 0 7px;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			cursor: pointer;
+		}
+	}
+
+	&__posts-list{
+		background: #f3f4f5;
+		border-radius: 5px;
+		position: absolute;
+		width: calc(100% - 15px);
+		padding: 8px;
+		border: 1px solid gray;
+		transform: translateY(4px);
+		max-height: 190px;
+		z-index: 1;
+
+		ul{
+			max-height: 117px;
+			overflow-y: auto;
+
+			li{ padding: 0 5px; }
+			li:hover, li.active{
+				background-color: white;
+				border-radius: 3px;
+			}
+		}
+	}
+}

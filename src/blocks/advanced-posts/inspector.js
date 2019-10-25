@@ -55,6 +55,7 @@ const Inspector = props => {
 		posts,
 		offset,
 		categories,
+		selectedPostTypes,
 	} = attributes;
 
 
@@ -197,6 +198,7 @@ const Inspector = props => {
 						categoriesList={ categoriesList }
 						selectedCategoryId={ categories }
 						selectedPosts={ selectedPosts ? selectedPosts : [] }
+						selectedPostTypes={ selectedPostTypes }
 						onOrderChange={ ( value ) => setAttributes( { order: value } ) }
 						onOrderByChange={ ( value ) => setAttributes( { orderBy: value } ) }
 						onCategoryChange={ ( value ) => setAttributes( { categories: '' !== value ? value : undefined } ) }
@@ -204,6 +206,7 @@ const Inspector = props => {
 							onSelectedPostsChange(value)
 							setAttributes( { posts : value } ) 
 						} }
+						onPostTypeChange={ value => setAttributes({ selectedPostTypes : value }) }
 						onOffsetChange={ (value) => setAttributes({ offset : value }) }
 						offset={ offset }
 					/>

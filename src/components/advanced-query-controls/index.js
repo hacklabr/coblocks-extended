@@ -9,6 +9,7 @@ import { __ } from '@wordpress/i18n';
 import { RangeControl, SelectControl } from '@wordpress/components';
 import { BaseControl } from '@wordpress/components';
 import SelectPosts from '../select-posts';
+import SelectPostTypes from '../select-post-types';
 import CategorySelect from './category-select';
 
 const DEFAULT_MIN_ITEMS = 1;
@@ -18,6 +19,7 @@ export default function AdvancedQueryControls( {
 	categoriesList,
 	selectedCategoryId,
 	selectedPosts,
+	selectedPostTypes,
 	numberOfItems,
 	order,
 	orderBy,
@@ -30,10 +32,23 @@ export default function AdvancedQueryControls( {
 	onOrderByChange,
 	onPostsChange,
 	onOffsetChange,
+	onPostTypeChange,
 } ) {
 	return [
 		( (!offset || offset == 0) &&
 			<SelectPosts selectedPosts={ selectedPosts } onChange={ (value) => onPostsChange(value) } />
+		),
+		(
+			<SelectPostTypes 
+			label="Post type"
+			selectedPostTypes={ selectedPostTypes }
+			multiple="multiple"
+			options={[
+				{ label : 'Todos', value : 'any' },
+				{ label : 'Posts', value : 'posts' },
+			]}
+			onPostTypeChange={ (event) => onPostTypeChange(event) }
+			></SelectPostTypes>
 		),
 		( onOrderChange && onOrderByChange ) && (
 			<SelectControl

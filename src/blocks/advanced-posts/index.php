@@ -30,14 +30,17 @@ function render_block( $attributes ) {
 		'offset'		   => $attributes['offset']
 	);
  
-	if(isset($attributes['selectedPosts'])){
+	if(isset($attributes['selectedPosts']) && count($attributes['selectedPosts']) > 0){
 		$args['post__in'] = array_map(function($p) {
 			return $p['ID'];
 		}, $attributes['selectedPosts']);
 	}
 
+	if(isset($attributes['selectedPostTypes']) && count($attributes['selectedPostTypes']) > 0 ){
+		$args['post_type'] = $attributes['selectedPostTypes'];
+	}
 
-	if ( isset( $attributes['categories'] ) ) {
+	if ( isset( $attributes['categories'] ) && count( $attributes['categories'] ) > 0 ) {
 		$args['category'] = $attributes['categories'];
 	}
 
@@ -414,6 +417,13 @@ function register_block() {
 					'type' => 'array',
 					'items' => [
 						'type' => 'object'
+					],
+					'default' => []
+				),
+				'selectedPostTypes' => array(
+					'type' => 'array',
+					'items' => [
+						'type' => 'string'
 					],
 					'default' => []
 				),
