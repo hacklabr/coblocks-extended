@@ -47,6 +47,7 @@ const Inspector = props => {
 		displayPostContent,
 		displayFirstPostImage,
 		displayCategory,
+		displayThumbnail,
 		columns,
 		listPosition,
 		imageSize,
@@ -86,7 +87,14 @@ const Inspector = props => {
 	const settings = (
 		<PanelBody title={ __( 'Posts Settings', 'coblocks' ) }>
 			<Fragment>
-				{ activeStyle.name != "featured" && 
+				{ activeStyle.name == "horizontal" &&
+					<ToggleControl
+						label={ __( 'Exibir Imagem', 'coblocks' ) }
+						checked={ displayThumbnail }
+						onChange={ () => setAttributes( { displayThumbnail: ! displayThumbnail } ) }
+					/>
+				}
+				{ activeStyle.name != "featured" && displayThumbnail &&
 					<ToggleControl
 					label={ __( 'Exibir imagem somente para o primeiro post' ) }
 					checked={ displayFirstPostImage }

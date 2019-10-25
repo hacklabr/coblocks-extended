@@ -224,7 +224,7 @@ function advanced_posts( $posts, $attributes ) {
 			}
 
 			$list_items_markup .= sprintf(
-				'<div class="wp-block-coblocks-posts__image table flex-0 %1$s"><a href="%2$s" class="block w-full bg-cover bg-center-center pt-full" style="background-image:url(%3$s)"></a></div>',
+				'<div class="wp-block-coblocks-posts__image '.( $attributes['displayThumbnail'] ? '' : 'hidden' ).' table flex-0 %1$s"><a href="%2$s" class="block w-full bg-cover bg-center-center pt-full" style="background-image:url(%3$s)"></a></div>',
 				esc_attr( $image_class ),
 				esc_url( $post['postLink'] ),
 				esc_url( $post['thumbnailURL'] )
@@ -362,6 +362,10 @@ function register_block() {
 				'displayFirstPostImage'    => array(
 					'type'    => 'boolean',
 					'default' => false,
+				),
+				'displayThumbnail' => array(
+					'type'    => 'boolean',
+					'default' => true,
 				),
 				'displayPostLink'    => array(
 					'type'    => 'boolean',

@@ -231,6 +231,7 @@ class AdvancedPostsEdit extends Component {
 			displayPostDate,
 			displayPostLink,
 			displayFirstPostImage,
+			displayThumbnail,
 			displayCategory,
 			postLink,
 			postFeedType,
@@ -244,12 +245,15 @@ class AdvancedPostsEdit extends Component {
 			offset,
 		} = attributes;
 
+		console.log(displayThumbnail)
+
 		const imageClasses = classnames( 'wp-block-coblocks-posts__image', 'table', 'flex-0', 'relative', {
 			'mr-3': isHorizontalStyle && listPosition === 'left',
 			'mb-2': isStackedStyle || isFeaturedStyle,
 			'ml-3': isHorizontalStyle && listPosition === 'right',
 			'w-full': isStackedStyle || isFeaturedStyle,
 			[ imageSize ]: isHorizontalStyle,
+			'hidden' : !displayThumbnail
 		} );
 
 		const editToolbarControls = [
@@ -520,8 +524,6 @@ export default compose( [
 				};
 			} );
 		}
-
-		console.log(latestPosts);
 
 		return {
 			latestPosts: latestPosts,
