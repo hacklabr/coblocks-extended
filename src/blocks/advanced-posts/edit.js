@@ -504,12 +504,12 @@ export default compose( [
 		const { getEntityRecords } = select( 'core' );
 
 		const latestPostsQuery = pickBy( {
-			categories,
 			order,
 			orderby: orderBy,
 			per_page: postsToShow,
 			include : selectedPosts.map(p => p.ID),
 			offset : selectedPosts.length > 0 || !offset ? 0 : offset,
+			categories : categories.filter( c => c != '' ),
 		}, ( value ) => ! isUndefined( value ) );
 
 		let cpts = selectedPostTypes.length == 0 ? [ 'post' ] : selectedPostTypes ;
