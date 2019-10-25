@@ -231,6 +231,7 @@ class AdvancedPostsEdit extends Component {
 			displayPostDate,
 			displayPostLink,
 			displayFirstPostImage,
+			displayCategory,
 			postLink,
 			postFeedType,
 			externalRssUrl,
@@ -436,6 +437,9 @@ class AdvancedPostsEdit extends Component {
 											</div>
 										}
 										<div className={ contentClasses }>
+											{ displayCategory &&
+												<div className="catgory">Categoria</div>
+											}
 											{ (isStackedStyle || isFeaturedStyle) && displayPostDate && post.date_gmt &&
 												<time dateTime={ format( 'c', post.date_gmt ) } className="wp-block-coblocks-posts__date mb-1">
 													{ dateI18n( dateFormat, post.date_gmt ) }
@@ -516,6 +520,8 @@ export default compose( [
 				};
 			} );
 		}
+
+		console.log(latestPosts);
 
 		return {
 			latestPosts: latestPosts,

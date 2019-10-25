@@ -68,7 +68,7 @@ function render_block( $attributes ) {
 	} else {
 
 		$recent_posts    = get_posts( $args );
-		$formatted_posts = coblocks_get_post_info( $recent_posts );
+		$formatted_posts = advanced_get_post_info( $recent_posts );
 
 	}
 
@@ -85,6 +85,54 @@ function render_block( $attributes ) {
 	}
 
 	return advanced_posts( $formatted_posts, $attributes );
+}
+
+function advanced_get_post_info( $posts ) {
+
+	$formatted_posts = [];
+
+	foreach ( $posts as $post ) {
+
+		$formatted_post = null;
+
+		$post_categories = wp_get_post_categories( $post->ID );
+		$terms = [];
+
+		foreach($post_categories as $category_id){
+			$category = get_category($category_id);
+			
+			$terms[] = array(
+				'ID' => $category_id,
+				'name' => $category->name,
+				'slug' => $category->slug,
+				'permalink' => get_category_link($category_id)
+			);
+		}
+
+		$formatted_post['ID']     		= esc_attr( get_the_ID( $post ) );
+		$formatted_post['categories']	= $terms;
+		$formatted_post['thumbnailURL'] = get_the_post_thumbnail_url( $post );
+		$formatted_post['date']         = esc_attr( get_the_date( 'c', $post ) );
+		$formatted_post['dateReadable'] = esc_html( get_the_date( '', $post ) );
+		$formatted_post['title']        = get_the_title( $post );
+		$formatted_post['postLink']     = esc_url( get_permalink( $post ) );
+
+		$post_excerpt = $post->post_excerpt;
+
+		if ( ! ( $post_excerpt ) ) {
+
+			$post_excerpt = $post->post_content;
+
+		}
+
+		$formatted_post['postExcerpt'] = $post_excerpt;
+
+		$formatted_posts[] = $formatted_post;
+
+	}
+
+	return $formatted_posts;
+
 }
 
 /**
@@ -205,6 +253,16 @@ function advanced_posts( $posts, $attributes ) {
 
 		}
 
+		if ( isset( $attributes['displayCategory'] ) && $attributes['displayCategory'] ) {
+			$list_items_markup .= '<div class="categories-list">';
+
+			foreach($post['categories'] as $category){
+				$list_items_markup .= '<div class="categories-list--category category-'.$category['slug'].'"><a href="'.esc_url($category['permalink']).'">'.$category['name'].'</a></div>';
+			}
+
+			$list_items_markup .= '</div>';
+		}		
+
 		$title = $post['title'];
 
 		if ( ! $title ) {
@@ -306,6 +364,10 @@ function register_block() {
 					'default' => false,
 				),
 				'displayPostLink'    => array(
+					'type'    => 'boolean',
+					'default' => false,
+				),
+				'displayCategory'    => array(
 					'type'    => 'boolean',
 					'default' => false,
 				),

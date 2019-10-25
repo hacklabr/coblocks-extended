@@ -46,6 +46,7 @@ const Inspector = props => {
 		displayPostDate,
 		displayPostContent,
 		displayFirstPostImage,
+		displayCategory,
 		columns,
 		listPosition,
 		imageSize,
@@ -104,6 +105,11 @@ const Inspector = props => {
 							__( 'Toggle to show the publish date.', 'coblocks' )
 					}
 					onChange={ () => setAttributes( { displayPostDate: ! displayPostDate } ) }
+				/>
+				<ToggleControl
+					label={ __( 'Exibir Categorias', 'coblocks' ) }
+					checked={ displayCategory }
+					onChange={ () => setAttributes( { displayCategory: ! displayCategory } ) }
 				/>
 				<ToggleControl
 					label={ __( 'Post Content', 'coblocks' ) }
