@@ -19,7 +19,18 @@ export default class SelectControl extends Component{
     onChangeValue = _.debounce((value) => {
         this.setState({ showPostsList : true, filteredPosts : [] })
 
-        apiFetch( { path: `/wp-json/coblocks-extended/v1/posts-by-title?title=${value}&post_type=any` } )
+        let postTypesQS = ''
+        let { postTypes } = this.props;
+
+        if( postTypes && postTypes.length > 0 ) {
+            postTypes.map(cpt => {
+                postTypesQS += `&post_type[]=${cpt}`
+            })
+        }else{
+            postTypesQS = 'post_type[]=any'
+        }
+
+        apiFetch( { path: `/wp-json/coblocks-extended/v1/posts-by-title?title=${value}&${postTypesQS}` } )
         .then(results => {
             this.setState({ filteredPosts : results.posts })
         })

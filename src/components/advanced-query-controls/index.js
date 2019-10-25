@@ -36,7 +36,7 @@ export default function AdvancedQueryControls( {
 } ) {
 	return [
 		( (!offset || offset == 0) &&
-			<SelectPosts selectedPosts={ selectedPosts } onChange={ (value) => onPostsChange(value) } />
+			<SelectPosts postTypes={ selectedPostTypes } selectedPosts={ selectedPosts } onChange={ (value) => onPostsChange(value) } />
 		),
 		(
 			<SelectPostTypes 

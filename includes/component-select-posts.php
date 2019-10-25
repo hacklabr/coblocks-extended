@@ -28,7 +28,7 @@ function find_posts(\WP_REST_Request $request) {
         'posts_per_page' => '24',
         'title_like' => $_GET['title'],
         'post_type' =>  $_GET['post_type'],
-        'post_status' => 'publish'
+        'post_status' => [ 'publish' ]
     ]);
 
     if($aqc_posts->have_posts() ) {

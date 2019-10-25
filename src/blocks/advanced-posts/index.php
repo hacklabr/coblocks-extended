@@ -22,7 +22,7 @@ function render_block( $attributes ) {
 
 	$args = array(
 		'posts_per_page'   => $attributes['postsToShow'],
-		'post_status'      => 'publish',
+		'post_status'      => [ 'publish', 'inherit' ],
 		'order'            => $attributes['order'],
 		'orderby'          => $attributes['orderBy'],
 		'suppress_filters' => false,
