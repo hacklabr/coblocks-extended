@@ -17,7 +17,10 @@ const DEFAULT_MAX_ITEMS = 100;
 
 export default function AdvancedQueryControls( {
 	categoriesList,
+	featuredList,
+	postTypeList,
 	selectedCategoryId,
+	selectedFeaturedId,
 	selectedPosts,
 	selectedPostTypes,
 	numberOfItems,
@@ -27,6 +30,7 @@ export default function AdvancedQueryControls( {
 	maxItems = DEFAULT_MAX_ITEMS,
 	minItems = DEFAULT_MIN_ITEMS,
 	onCategoryChange,
+	onFeaturedChange,
 	onNumberOfItemsChange,
 	onOrderChange,
 	onOrderByChange,
@@ -34,6 +38,14 @@ export default function AdvancedQueryControls( {
 	onOffsetChange,
 	onPostTypeChange,
 } ) {
+	
+	let hasFeatured = () => {
+		if(!selectedPostTypes.length)
+			return false; 
+
+		return postTypeList.filter( cpt => selectedPostTypes.indexOf(cpt.value) > -1 && !cpt.has_featured ).length == 0
+	}
+
 	return [
 		( (!offset || offset == 0) &&
 			<SelectPosts postTypes={ selectedPostTypes } selectedPosts={ selectedPosts } onChange={ (value) => onPostsChange(value) } />
@@ -84,6 +96,16 @@ export default function AdvancedQueryControls( {
 						onOrderByChange( newOrderBy );
 					}
 				} }
+			/>
+		),
+		featuredList && hasFeatured() && (
+			<CategorySelect
+				key="query-controls-featured-select"
+				categoriesList={ featuredList }
+				label={ __( 'Destaque' ) }
+				noOptionLabel={ __( 'All' ) }
+				selectedCategoryId={ selectedFeaturedId }
+				onChange={ onFeaturedChange }
 			/>
 		),
 		onCategoryChange && (

@@ -31,10 +31,12 @@ const Inspector = props => {
 		setAttributes,
 		onUserModifiedColumn,
 		categoriesList,
+		featuredList,
 		postCount,
 		hasPosts,
 		hasFeaturedImage,
 		onSelectedPostsChange,
+		postTypeList,
 	} = props;
 
 	const {
@@ -55,6 +57,7 @@ const Inspector = props => {
 		posts,
 		offset,
 		categories,
+		featureds,
 		selectedPostTypes,
 	} = attributes;
 
@@ -196,12 +199,16 @@ const Inspector = props => {
 					<AdvancedQueryControls
 						{ ...{ order, orderBy } }
 						categoriesList={ categoriesList }
+						featuredList={ featuredList }
 						selectedCategoryId={ categories }
+						selectedFeaturedId={ featureds }
 						selectedPosts={ selectedPosts ? selectedPosts : [] }
 						selectedPostTypes={ selectedPostTypes }
+						postTypeList={ postTypeList }
 						onOrderChange={ ( value ) => setAttributes( { order: value } ) }
 						onOrderByChange={ ( value ) => setAttributes( { orderBy: value } ) }
 						onCategoryChange={ ( value ) => setAttributes( { categories: '' !== value ? value : undefined } ) }
+						onFeaturedChange={ ( value ) => setAttributes( { featureds: '' !== value ? value : undefined } ) }
 						onPostsChange={ ( value ) => {
 							onSelectedPostsChange(value)
 							setAttributes( { posts : value } ) 

@@ -44,6 +44,16 @@ function render_block( $attributes ) {
 		$args['category'] = $attributes['categories'];
 	}
 
+	if ( isset( $attributes['featureds'] ) && count( $attributes['featureds'] ) > 0 ) {
+		$args['tax_query'] = array(
+            array(
+                'taxonomy' => 'featured',
+                'field'    => 'term_id',
+                'terms'    => $attributes['featureds'],
+            ),
+        );
+	}
+
 	if ( 'external' === $attributes['postFeedType'] && $attributes['externalRssUrl'] ) {
 
 		$recent_posts = fetch_feed( $attributes['externalRssUrl'] );
@@ -407,6 +417,13 @@ function register_block() {
 					'default' => 'date',
 				),
 				'categories'         => array(
+					'type' => 'array',
+					'items' => [
+						'type' => 'string'
+					],
+					'default' => [ ]
+				),
+				'featureds'         => array(
 					'type' => 'array',
 					'items' => [
 						'type' => 'string'
