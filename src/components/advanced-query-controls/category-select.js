@@ -8,8 +8,6 @@ export default function CategorySelect( { label, noOptionLabel, categoriesList, 
 	const termsTree = buildTermsTree( categoriesList );
 	let selectedTerms = selectedCategoryId
 
-	console.log(selectedTerms)
-
 	const handleChange = (e) => {
 		var options = e.target.options;
 		var value = [];

@@ -21,6 +21,10 @@
 		}
 	}
 
+	.wp-block-coblocks-posts__image.hidden{
+		display: none !important;
+	}
+
 	&.is-style-featured .columns{
 		.flex.items-stretch { position: relative; }
 

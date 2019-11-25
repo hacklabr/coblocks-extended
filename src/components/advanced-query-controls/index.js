@@ -9,6 +9,7 @@ import { __ } from '@wordpress/i18n';
 import { RangeControl, SelectControl } from '@wordpress/components';
 import { BaseControl } from '@wordpress/components';
 import SelectPosts from '../select-posts';
+import SelectPostTypes from '../select-post-types';
 import CategorySelect from './category-select';
 
 const DEFAULT_MIN_ITEMS = 1;
@@ -16,8 +17,12 @@ const DEFAULT_MAX_ITEMS = 100;
 
 export default function AdvancedQueryControls( {
 	categoriesList,
+	featuredList,
+	postTypeList,
 	selectedCategoryId,
+	selectedFeaturedId,
 	selectedPosts,
+	selectedPostTypes,
 	numberOfItems,
 	order,
 	orderBy,
@@ -25,15 +30,37 @@ export default function AdvancedQueryControls( {
 	maxItems = DEFAULT_MAX_ITEMS,
 	minItems = DEFAULT_MIN_ITEMS,
 	onCategoryChange,
+	onFeaturedChange,
 	onNumberOfItemsChange,
 	onOrderChange,
 	onOrderByChange,
 	onPostsChange,
 	onOffsetChange,
+	onPostTypeChange,
 } ) {
+	
+	let hasFeatured = () => {
+		if(!selectedPostTypes.length)
+			return false; 
+
+		return postTypeList.filter( cpt => selectedPostTypes.indexOf(cpt.value) > -1 && !cpt.has_featured ).length == 0
+	}
+
 	return [
 		( (!offset || offset == 0) &&
-			<SelectPosts selectedPosts={ selectedPosts } onChange={ (value) => onPostsChange(value) } />
+			<SelectPosts postTypes={ selectedPostTypes } selectedPosts={ selectedPosts } onChange={ (value) => onPostsChange(value) } />
+		),
+		(
+			<SelectPostTypes 
+			label="Post type"
+			selectedPostTypes={ selectedPostTypes }
+			multiple="multiple"
+			options={[
+				{ label : 'Todos', value : 'any' },
+				{ label : 'Posts', value : 'posts' },
+			]}
+			onPostTypeChange={ (event) => onPostTypeChange(event) }
+			></SelectPostTypes>
 		),
 		( onOrderChange && onOrderByChange ) && (
 			<SelectControl
@@ -69,6 +96,16 @@ export default function AdvancedQueryControls( {
 						onOrderByChange( newOrderBy );
 					}
 				} }
+			/>
+		),
+		featuredList && hasFeatured() && (
+			<CategorySelect
+				key="query-controls-featured-select"
+				categoriesList={ featuredList }
+				label={ __( 'Destaque' ) }
+				noOptionLabel={ __( 'All' ) }
+				selectedCategoryId={ selectedFeaturedId }
+				onChange={ onFeaturedChange }
 			/>
 		),
 		onCategoryChange && (

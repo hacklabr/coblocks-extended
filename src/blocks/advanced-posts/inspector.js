@@ -31,10 +31,12 @@ const Inspector = props => {
 		setAttributes,
 		onUserModifiedColumn,
 		categoriesList,
+		featuredList,
 		postCount,
 		hasPosts,
 		hasFeaturedImage,
 		onSelectedPostsChange,
+		postTypeList,
 	} = props;
 
 	const {
@@ -46,6 +48,8 @@ const Inspector = props => {
 		displayPostDate,
 		displayPostContent,
 		displayFirstPostImage,
+		displayCategory,
+		displayThumbnail,
 		columns,
 		listPosition,
 		imageSize,
@@ -53,6 +57,8 @@ const Inspector = props => {
 		posts,
 		offset,
 		categories,
+		featureds,
+		selectedPostTypes,
 	} = attributes;
 
 
@@ -85,7 +91,14 @@ const Inspector = props => {
 	const settings = (
 		<PanelBody title={ __( 'Posts Settings', 'coblocks' ) }>
 			<Fragment>
-				{ activeStyle.name != "featured" && 
+				{ activeStyle.name == "horizontal" &&
+					<ToggleControl
+						label={ __( 'Exibir Imagem', 'coblocks' ) }
+						checked={ displayThumbnail }
+						onChange={ () => setAttributes( { displayThumbnail: ! displayThumbnail } ) }
+					/>
+				}
+				{ activeStyle.name != "featured" && displayThumbnail &&
 					<ToggleControl
 					label={ __( 'Exibir imagem somente para o primeiro post' ) }
 					checked={ displayFirstPostImage }
@@ -104,6 +117,11 @@ const Inspector = props => {
 							__( 'Toggle to show the publish date.', 'coblocks' )
 					}
 					onChange={ () => setAttributes( { displayPostDate: ! displayPostDate } ) }
+				/>
+				<ToggleControl
+					label={ __( 'Exibir Categorias', 'coblocks' ) }
+					checked={ displayCategory }
+					onChange={ () => setAttributes( { displayCategory: ! displayCategory } ) }
 				/>
 				<ToggleControl
 					label={ __( 'Post Content', 'coblocks' ) }
@@ -181,15 +199,21 @@ const Inspector = props => {
 					<AdvancedQueryControls
 						{ ...{ order, orderBy } }
 						categoriesList={ categoriesList }
+						featuredList={ featuredList }
 						selectedCategoryId={ categories }
+						selectedFeaturedId={ featureds }
 						selectedPosts={ selectedPosts ? selectedPosts : [] }
+						selectedPostTypes={ selectedPostTypes }
+						postTypeList={ postTypeList }
 						onOrderChange={ ( value ) => setAttributes( { order: value } ) }
 						onOrderByChange={ ( value ) => setAttributes( { orderBy: value } ) }
 						onCategoryChange={ ( value ) => setAttributes( { categories: '' !== value ? value : undefined } ) }
+						onFeaturedChange={ ( value ) => setAttributes( { featureds: '' !== value ? value : undefined } ) }
 						onPostsChange={ ( value ) => {
 							onSelectedPostsChange(value)
 							setAttributes( { posts : value } ) 
 						} }
+						onPostTypeChange={ value => setAttributes({ selectedPostTypes : value }) }
 						onOffsetChange={ (value) => setAttributes({ offset : value }) }
 						offset={ offset }
 					/>

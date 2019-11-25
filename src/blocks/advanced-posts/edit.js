@@ -115,6 +115,8 @@ class AdvancedPostsEdit extends Component {
 
 		this.state = {
 			categoriesList: [],
+			featuredList: [],
+			postTypeList: [],
 			editing: ! this.props.attributes.externalRssUrl,
 			lastColumnValue: null,
 
@@ -154,6 +156,35 @@ class AdvancedPostsEdit extends Component {
 			() => {
 				if ( this.isStillMounted ) {
 					this.setState( { categoriesList: [] } );
+				}
+			}
+		);
+
+		this.fetchRequest = apiFetch( {
+			path: addQueryArgs( '/wp-json/coblocks-extended/v1/taxonomy-terms', { slug : 'featured' } ),
+		} ).then(
+			( featuredList ) => {
+				if ( this.isStillMounted ) {
+					this.setState( { featuredList } );
+				}
+			}
+		).catch( () => {
+				if ( this.isStillMounted ) {
+					this.setState( { featuredList: [] } );
+				}
+			}
+		);
+
+		this.fetchRequest = apiFetch( {
+			path: addQueryArgs( '/wp-json/coblocks-extended/v1/post-types', { } ),
+		} ).then( ( postTypeList ) => {
+				if ( this.isStillMounted ) {
+					this.setState( { postTypeList } );
+				}
+			}
+		).catch( () => {
+				if ( this.isStillMounted ) {
+					this.setState( { postTypeList: [] } );
 				}
 			}
 		);
@@ -218,7 +249,7 @@ class AdvancedPostsEdit extends Component {
 			latestPosts,
 		} = this.props;
 
-		const { categoriesList } = this.state;
+		const { categoriesList, featuredList, postTypeList } = this.state;
 
 		const isHorizontalStyle = includes( className, 'is-style-horizontal' );
 		const isStackedStyle = includes( className, 'is-style-stacked' );
@@ -231,6 +262,8 @@ class AdvancedPostsEdit extends Component {
 			displayPostDate,
 			displayPostLink,
 			displayFirstPostImage,
+			displayThumbnail,
+			displayCategory,
 			postLink,
 			postFeedType,
 			externalRssUrl,
@@ -249,6 +282,7 @@ class AdvancedPostsEdit extends Component {
 			'ml-3': isHorizontalStyle && listPosition === 'right',
 			'w-full': isStackedStyle || isFeaturedStyle,
 			[ imageSize ]: isHorizontalStyle,
+			'hidden' : !displayThumbnail
 		} );
 
 		const editToolbarControls = [
@@ -292,6 +326,8 @@ class AdvancedPostsEdit extends Component {
 						styleOptions={ styleOptions }
 						onUpdateStyle={ this.updateStyle }
 						categoriesList={ categoriesList }
+						featuredList={ featuredList }
+						postTypeList={ postTypeList }
 						postCount={ latestPosts && latestPosts.length }
 						onSelectedPostsChange={ (value) => setAttributes( { selectedPosts : value } ) }
 					/>
@@ -335,6 +371,8 @@ class AdvancedPostsEdit extends Component {
 						styleOptions={ styleOptions }
 						onUpdateStyle={ this.updateStyle }
 						categoriesList={ categoriesList }
+						featuredList={ featuredList }
+						postTypeList={ postTypeList }
 						postCount={ latestPosts && latestPosts.length }
 						onSelectedPostsChange={ (value) => setAttributes( { selectedPosts : value } ) }
 					/>
@@ -373,6 +411,8 @@ class AdvancedPostsEdit extends Component {
 					styleOptions={ styleOptions }
 					onUpdateStyle={ this.updateStyle }
 					categoriesList={ categoriesList }
+					featuredList={ featuredList }
+					postTypeList={ postTypeList }
 					postCount={ latestPosts && latestPosts.length }
 					selectedPosts={ selectedPosts }
 					onSelectedPostsChange={ (value) => setAttributes( { selectedPosts : value } ) }
@@ -420,8 +460,8 @@ class AdvancedPostsEdit extends Component {
 
 								const titleTrimmed = post.title.rendered.trim();
 
-								let excerpt = post.excerpt.rendered;
-								if ( post.excerpt.raw === '' ) {
+								let excerpt = post.excerpt ? post.excerpt.rendered : '';
+								if ( post.excerpt && post.excerpt.raw === '' ) {
 									excerpt = post.content.raw;
 								}
 								const excerptElement = document.createElement( 'div' );
@@ -436,6 +476,9 @@ class AdvancedPostsEdit extends Component {
 											</div>
 										}
 										<div className={ contentClasses }>
+											{ displayCategory &&
+												<div className="catgory">Categoria</div>
+											}
 											{ (isStackedStyle || isFeaturedStyle) && displayPostDate && post.date_gmt &&
 												<time dateTime={ format( 'c', post.date_gmt ) } className="wp-block-coblocks-posts__date mb-1">
 													{ dateI18n( dateFormat, post.date_gmt ) }
@@ -494,21 +537,34 @@ class AdvancedPostsEdit extends Component {
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { postsToShow, order, orderBy, categories, selectedPosts, offset } = props.attributes;
+		const { postsToShow, order, orderBy, categories, selectedPosts, offset, selectedPostTypes, featureds } = props.attributes;
 		const { getEntityRecords } = select( 'core' );
 
 		const latestPostsQuery = pickBy( {
-			categories,
 			order,
 			orderby: orderBy,
 			per_page: postsToShow,
 			include : selectedPosts.map(p => p.ID),
 			offset : selectedPosts.length > 0 || !offset ? 0 : offset,
+			categories : categories.filter( c => c != '' ),
+			taxonomy : 'featured',
+			taxonomy_terms : featureds.filter( f => f != '' ),
 		}, ( value ) => ! isUndefined( value ) );
 
+		let cpts = selectedPostTypes.length == 0 ? [ 'post' ] : selectedPostTypes ;
+		let latestPosts = [] 
 
-		let latestPosts = getEntityRecords( 'postType', 'post', latestPostsQuery );
-		if ( latestPosts ) {
+		cpts.map(cpt => {
+			let entityRecords = getEntityRecords( 'postType', (cpt == 'any' ? 'post' : cpt), latestPostsQuery )
+			if(entityRecords && entityRecords.length > 0){
+				latestPosts = [ ...latestPosts, ...entityRecords ]
+			}
+		}) 
+
+		
+		// Limpa quando "Todos" estiver selecionado
+
+		if ( latestPosts.length > 0 ) {
 			latestPosts = latestPosts.map( ( post ) => {
 				return {
 					...post,
@@ -516,7 +572,7 @@ export default compose( [
 				};
 			} );
 		}
-
+		
 		return {
 			latestPosts: latestPosts,
 		};
